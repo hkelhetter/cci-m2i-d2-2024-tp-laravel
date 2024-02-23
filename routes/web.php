@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\{AdminController, AssocierControlleurs, HomeController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,22 +13,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    echo (new \App\Http\Controllers\Controller())->index();
-});
-Route::get('/assosier', function () {
-    echo (new \App\Http\Controllers\AssocierControlleurs)->index();
-});
-Route::get('/assosier-creer', function () {
-    echo (new \App\Http\Controllers\AssocierControlleurs)->create();
-});
-Route::post('/assosier-creer-2', function () {
-    echo (new \App\Http\Controllers\AssocierControlleurs)->store();
-});
-Route::get('/assosier-show', function () {
-    echo (new \App\Http\Controllers\AssocierControlleurs)->show();
-});
-Route::get('/assosier-detruite', function () {
-    echo (new \App\Http\Controllers\AssocierControlleurs)->delete();
-});
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/associer', [AssocierControlleurs::class, 'index'])->name('user');
+Route::get('/associer/creer', [AssocierControlleurs::class, 'create'])->name('user.create');
+Route::post('/associer/store', [AssocierControlleurs::class, 'store'])->name('user.store');
+Route::get('/associer/show/{id}', [AssocierControlleurs::class, 'show'])->name('user.show');
+Route::get('/associer/delete/{id}', [AssocierControlleurs::class, 'delete'])->name('user.delete')->middleware('isUser');

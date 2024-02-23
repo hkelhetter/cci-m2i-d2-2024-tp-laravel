@@ -4,29 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Validator;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    // This is only default controller
-    function index() {
-        $new = (new Controller);
-        $titre = 'Accueil';
-        $menu = [
-            [
-                'url' => '/',
-                'nom' => 'Accueil'
-            ],
-            [
-                'url' => '/about',
-                'nom' => 'A propos'
-            ],
-            [
-                'name' => 'Contact'
-            ]
-        ];
-        require __DIR__."/templates/index.php";
+    public function validateAndGetErrors(Request $request, array $rules)
+    {
+        $validator = Validator::make($request->all(), $rules);
+        return $validator->errors()->toArray();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $var = (new Controller())->test();
-        dump($var);
-        $var = new RouteServiceProvider();
-        $var->get('/');
-        dd('test this');
+        Paginator::useBootstrapFive();
     }
 }
